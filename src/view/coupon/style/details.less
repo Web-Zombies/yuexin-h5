@@ -131,6 +131,7 @@
       text-align: center;
       position: fixed;
       bottom: 40px;
+
       div {
         margin: auto;
         width: 90%;
@@ -140,4 +141,56 @@
       }
     }
   }
+
+  .van-dialog__content {
+    .lable {
+      padding: 12px 12px;
+      font-weight: bold;
+      color: #0C1D40;
+      font-size: 26px;
+      background: url("../../../assets/images/home/dialog-bg.png") no-repeat;
+      background-size: 100%;
+    }
+
+    .dialog-text {
+      color: #1C232E;
+      padding: 12px 14px;
+    }
+
+    .dialog-input {
+      width: 90%;
+      margin: 12px auto;
+      height: 55px;
+      border: 1px solid #DBE2EC;
+      margin-bottom: 10px;
+    }
+  }
+
+  ::v-deep.van-dialog {
+    .van-hairline--top::after {
+      border: none !important;
+    }
+
+    .van-dialog__cancel,
+    .van-dialog__confirm {
+      margin: 14px !important;
+    }
+
+    .van-dialog__cancel {
+      background-color: #E7EEFA !important;
+      border-radius: 8px !important;
+    }
+
+    .van-hairline--left {
+      background-color: #1975FF !important;
+      border-radius: 8px !important;
+    }
+  }
+
+  ::v-deep.van-cell {
+    .van-field__control {
+      font-size: 28px !important;
+    }
+  }
+
 }

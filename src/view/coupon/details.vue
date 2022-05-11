@@ -38,11 +38,11 @@
       </div>
     </div>
 
-    <van-dialog v-model="show" show-cancel-button confirm-button-text="立即发送" confirm-button-color="#FFFFFF" cancel-button-color="#E7EEFA">
-      <div>卡券发送</div>
-      <div>发送给:</div>
-      <div>
-        <van-field v-model="value" placeholder="请输入车牌" />
+    <van-dialog v-model="show" show-cancel-button confirm-button-text="立即发送" confirm-button-color="#FFFFFF" cancel-button-color="#7D90AE" @confirm="onConfirm" @cancel="onCancel">
+      <div class="lable">卡券发送</div>
+      <div class="dialog-text">发送给:</div>
+      <div class="dialog-input">
+        <van-field v-model="value" placeholder="车牌号" />
       </div>
     </van-dialog>
   </div>
@@ -66,7 +66,10 @@ export default {
     }
   },
   methods: {
-
+    onConfirm () { //确认
+    },
+    onCancel () { //取消
+    }
   }
 };
 </script>
