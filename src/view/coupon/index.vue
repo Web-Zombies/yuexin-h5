@@ -6,14 +6,14 @@
       <van-dropdown-item v-model="value3" :options="option3" />
     </van-dropdown-menu>
     <div class="coupon-center">
-      <div class="coupon-box" v-for="(item,index) in couponData" :key="index" :class="item.checked == false?'coupon-box-static':''" @click="onDetails">
+      <div class="coupon-box" v-for="(item,index) in couponData" :key="index" :class="item.checked == false?'coupon-box-static':''">
         <div class="box-name">
           <div>{{item.name}}</div>
           <div>
             <van-switch v-model="item.checked" size="18" active-color="#FFFFFF" inactive-color="#ACB6C8" />
           </div>
         </div>
-        <div class="box-main">
+        <div class="box-main" @click.stop="onDetails">
           <div class="box-main-center">
             <div class="text">{{item.text}}</div>
             <div class="number">

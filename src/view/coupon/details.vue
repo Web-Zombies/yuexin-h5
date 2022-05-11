@@ -42,7 +42,7 @@
       <div class="lable">卡券发送</div>
       <div class="dialog-text">发送给:</div>
       <div class="dialog-input">
-        <van-field v-model="value" placeholder="车牌号" />
+        <van-field v-model="value" />
       </div>
     </van-dialog>
   </div>
@@ -60,7 +60,7 @@ export default {
     return {
       show: false,
       checked: true,
-      value: '',
+      value: '湘A1T658',
       list: [{ name: '主码', bh: '200502001', type: '1' }, { name: '辅码', bh: '200502001', type: '2' }],
       listTow: [{ name: '卷总数', sum: '', unit: '' }, { name: '已领取', sum: '0', unit: '张' }, { name: '可领取', sum: '', unit: '' }]
     }
