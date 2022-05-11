@@ -55,6 +55,7 @@
     <div style="position: absolute;top: 80px;right: 20px;font-size: 12px;">
       <div @click="releaseRow">放行申请-审核列表(测试入口)</div>
       <div @click="releaseTowRow">放行申请-申请列表(测试入口)</div>
+      <div @click="couponRow">优惠卷列表(测试入口)</div>
     </div>
   </div>
 </template>
@@ -86,6 +87,9 @@ export default {
     },
     releaseTowRow () {
       this.$router.push({ path: '/release-tow' })
+    },
+    couponRow () {
+      this.$router.push({ path: '/coupon' })
     }
   }
 };
