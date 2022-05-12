@@ -8,7 +8,7 @@
     <div class="home-main">
       <div class="video-bg">
         <van-icon name="play-circle-o" size="50" color="RGBA(235, 244, 255, 0.6)" @click="onVideo" />
-        <div class="chukou" v-if="!videoFlag"></div>
+        <div class="chukou" v-if="!videoFlag" @click="chuRkouRow">{{chuRkou}}</div>
         <video-player style="width:98%;height:92%;margin:0 auto;padding-top:8px;" v-else class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="playsinline" :options="playerOptions">
         </video-player>
       </div>
@@ -132,6 +132,7 @@ export default {
     return {
       list: [{ name: "关闸", icon: "icon1" }, { name: "发送信息", icon: "icon2" }, { name: "现场缴费", icon: "icon3" }, { name: "锁定", icon: "icon4" }, { name: "解锁", icon: "icon5" }, { name: "车辆查询", icon: "icon6" }],
       paName: '嘉兴苑-南门岗亭',
+      chuRkou: '出口',
       changePaName: null,
       flag: false,
 
@@ -223,6 +224,13 @@ export default {
   methods: {
     putRow () {
       this.flag = !this.flag;
+    },
+    chuRkouRow () { //出入口
+      if (this.chuRkou == '出口') {
+        this.chuRkou = '入口'
+      }else{
+        this.chuRkou = '出口'
+      }
     },
     //放行申请
     releaseRow () {
