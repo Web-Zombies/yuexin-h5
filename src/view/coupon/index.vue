@@ -29,6 +29,10 @@
         </div>
       </div>
     </div>
+    <div style="height:76px"></div>
+    <div class="coupon-bottom">
+      <div>优惠劵申请审核</div>
+    </div>
   </div>
 </template>
 

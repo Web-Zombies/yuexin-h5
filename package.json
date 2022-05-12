@@ -13,7 +13,8 @@
     "core-js": "^3.4.3",
     "vant": "^2.2.0",
     "vue": "^2.6.10",
-    "vue-router": "^3.0.5"
+    "vue-router": "^3.0.5",
+    "vue-video-player": "^5.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.1",
@@ -40,7 +41,8 @@
       "no-console": "off",
       "no-unused-vars": "off",
       "no-undef": "off",
-      "no-debugger": "off"
+      "no-debugger": "off",
+      "no-empty": "off"
     },
     "parserOptions": {
       "parser": "babel-eslint"
