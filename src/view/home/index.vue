@@ -8,7 +8,7 @@
     <div class="home-main">
       <div class="video-bg">
         <van-icon name="play-circle-o" size="50" color="RGBA(235, 244, 255, 0.6)" @click="onVideo" />
-        <div class="chukou" v-if="!videoFlag" @click="chuRkouRow">{{chuRkou}}</div>
+        <div class="chukou" v-if="!videoFlag" @click="showChr = true">{{chuRkou}}</div>
         <video-player style="width:98%;height:92%;margin:0 auto;padding-top:8px;" v-else class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="playsinline" :options="playerOptions">
         </video-player>
       </div>
@@ -29,11 +29,11 @@
       </div>
     </div>
     <div class="center">
-      <div class="center-left">
+      <div class="center-left" @click="showResponsible =true">
         <div>有责开闸</div>
         <div>需要核车辆信息</div>
       </div>
-      <div class="center-right">
+      <div class="center-right" @click="showNoResponsible = true">
         <div>无责开闸</div>
         <div>无需核对可开闸</div>
       </div>
@@ -73,6 +73,11 @@
       <div class="lable">请选择车场</div>
       <van-picker show-toolbar :columns="columnsPa" @change="onChangePa" />
     </van-dialog>
+    <!-- 选择出入 -->
+    <van-dialog v-model="showChr" show-cancel-button confirm-button-text="确认" confirm-button-color="#FFFFFF" cancel-button-color="#7D90AE" @confirm="onConfirmChr">
+      <div class="lable">出入口选择</div>
+      <van-picker show-toolbar :columns="columnsChr" @change="onChangeChr" />
+    </van-dialog>
     <!-- 停车详情 -->
     <van-action-sheet v-model="showDe">
       <div class="lable">
@@ -81,7 +86,7 @@
       </div>
       <div class="content">
         <div class="content-box" v-for="item in contentDeList" :key="item.name">
-          <div>{{item.name}}：</div>
+          <div class="center-box-name ">{{item.name}}：</div>
           <div>{{item.val}}</div>
         </div>
       </div>
@@ -112,6 +117,52 @@
         <div class="save" @click="showNews =false">确定</div>
       </div>
     </van-action-sheet>
+    <!-- 有责开闸 -->
+    <van-action-sheet v-model="showResponsible">
+      <div class="lable-tow">
+        <div>有责开闸</div>
+        <div>确认发送后信息会在对应闸机上显示</div>
+      </div>
+      <div class="news-center">
+        <van-radio-group v-model="responsibleRadio">
+          <van-radio name="1">需要小区工作人维修西北门岗亭</van-radio>
+          <van-radio name="2">南门岗亭正在改造</van-radio>
+          <van-radio name="3">需要小区工作人维修西北门岗亭</van-radio>
+          <van-radio name="4">南门岗亭正在改造</van-radio>
+        </van-radio-group>
+      </div>
+      <div class="news-text">备注信息</div>
+      <div class="news-textarea">
+        <van-field v-model="responsibleVlaue" rows="4" autosize type="textarea" placeholder="请填写备注信息内容..." />
+      </div>
+      <div class="news-bot">
+        <div class="cancel" @click="showResponsible =false">取消</div>
+        <div class="save" @click="showResponsible =false">确定</div>
+      </div>
+    </van-action-sheet>
+    <!-- 无责开闸 -->
+    <van-action-sheet v-model="showNoResponsible">
+      <div class="lable-tow">
+        <div>无责开闸</div>
+        <div>确认发送后信息会在对应闸机上显示</div>
+      </div>
+      <div class="news-center">
+        <van-radio-group v-model="noResponsibleRadio">
+          <van-radio name="1">需要小区工作人维修西北门岗亭</van-radio>
+          <van-radio name="2">南门岗亭正在改造</van-radio>
+          <van-radio name="3">需要小区工作人维修西北门岗亭</van-radio>
+          <van-radio name="4">南门岗亭正在改造</van-radio>
+        </van-radio-group>
+      </div>
+      <div class="news-text">备注信息</div>
+      <div class="news-textarea">
+        <van-field v-model="noResponsibleVlaue" rows="4" autosize type="textarea" placeholder="请填写备注信息内容..." />
+      </div>
+      <div class="news-bot">
+        <div class="cancel" @click="showNoResponsible =false">取消</div>
+        <div class="save" @click="showNoResponsible =false">确定</div>
+      </div>
+    </van-action-sheet>
   </div>
 </template>
 
@@ -133,6 +184,9 @@ export default {
       list: [{ name: "关闸", icon: "icon1" }, { name: "发送信息", icon: "icon2" }, { name: "现场缴费", icon: "icon3" }, { name: "锁定", icon: "icon4" }, { name: "解锁", icon: "icon5" }, { name: "车辆查询", icon: "icon6" }],
       paName: '嘉兴苑-南门岗亭',
       chuRkou: '出口',
+      changePaChr: null,
+      columnsChr: ['出口', '入口'],
+      showChr: false,
       changePaName: null,
       flag: false,
 
@@ -141,11 +195,18 @@ export default {
       valuePl: '湘A00001',
 
       showPa: false,
-
+      //发送消息
       showNews: false,
       newsRadio: '1',
       newsVlaue: '',
-
+      //有责开闸
+      showResponsible: false,
+      responsibleRadio: '1',
+      responsibleVlaue: '',
+      //无责开闸
+      showNoResponsible: false,
+      noResponsibleRadio: '1',
+      noResponsibleVlaue: '',
       columnsPa: [{
         text: '嘉兴苑',
         children: [
@@ -225,13 +286,6 @@ export default {
     putRow () {
       this.flag = !this.flag;
     },
-    chuRkouRow () { //出入口
-      if (this.chuRkou == '出口') {
-        this.chuRkou = '入口'
-      }else{
-        this.chuRkou = '出口'
-      }
-    },
     //放行申请
     releaseRow () {
       this.$router.push({ path: '/release' })
@@ -242,18 +296,27 @@ export default {
     couponRow () {
       this.$router.push({ path: '/coupon' })
     },
-    onChangePa (picker, values) {
-      // console.log(picker, values);
-      this.changePaName = values[0] + '-' + values[1];
-    },
     //车牌选择
     onConfirmPl () {
       this.plateName = this.valuePl;
+    },
+    onChangePa (picker, values) {
+      // console.log(picker, values);
+      this.changePaName = values[0] + '-' + values[1];
     },
     //车场选择
     onConfirmPa () {
       if (this.changePaName) {
         this.paName = this.changePaName;
+      }
+    },
+    onChangeChr (picker, values) {
+      this.changePaChr = values
+    },
+    //出入口选择
+    onConfirmChr () {
+      if (this.changePaChr) {
+        this.chuRkou = this.changePaChr;
       }
     },
     onVideo () {
@@ -272,6 +335,9 @@ export default {
         case '发送信息':
           this.showNews = true;
           break;
+        case '车辆查询':
+          this.$router.push({ path: '/home-query' })
+          break;
         default:
           break;
       }
@@ -281,5 +347,5 @@ export default {
 </script>
 
 <style lang="less"  scoped>
-@import "./index.less";
+@import "./style/index.less";
 </style>

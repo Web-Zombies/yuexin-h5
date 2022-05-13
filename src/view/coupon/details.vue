@@ -20,7 +20,7 @@
               <div>{{item.bh}}</div>
             </div>
             <div class="icon">
-              <div class="edit"></div>
+              <div class="edit" @click="showBh=true"></div>
               <div class="refresh"></div>
             </div>
           </div>
@@ -45,6 +45,13 @@
         <van-field v-model="value" />
       </div>
     </van-dialog>
+    <!-- 卡密修改 -->
+    <van-dialog v-model="showBh" show-cancel-button confirm-button-text="确认" confirm-button-color="#FFFFFF" cancel-button-color="#7D90AE" @confirm="onConBh">
+      <div class="lable">卡密修改</div>
+      <div class="dialog-input">
+        <van-field v-model="valueBh" />
+      </div>
+    </van-dialog>
   </div>
 </template>
 
@@ -60,6 +67,8 @@ export default {
     return {
       show: false,
       checked: true,
+      showBh: false,
+      valueBh: '200502001',
       value: '湘A1T658',
       list: [{ name: '主码', bh: '200502001', type: '1' }, { name: '辅码', bh: '200502001', type: '2' }],
       listTow: [{ name: '卷总数', sum: '', unit: '' }, { name: '已领取', sum: '0', unit: '张' }, { name: '可领取', sum: '', unit: '' }]
@@ -69,7 +78,10 @@ export default {
     onConfirm () { //确认
     },
     onCancel () { //取消
-    }
+    },
+    onConBh () {
+
+    },
   }
 };
 </script>

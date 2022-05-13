@@ -46,6 +46,13 @@ const routes = [
       title: '优惠劵详情'
     }
   }
+  , {
+    name: 'home-query',
+    component: () => import('./view/home/query'),
+    meta: {
+      title: '查询结果'
+    }
+  }
 ];
 
 // add route path
